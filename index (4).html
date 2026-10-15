@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>내가 태어난 주의 빌보드 TOP 5</title>
+<style>
+  :root {
+    --bg1: #fff1f5;
+    --bg2: #fff6e5;
+    --card: #ffffff;
+    --line: #f1e3ea;
+    --text: #2a2236;
+    --muted: #7b7390;
+    --accent: #ff4f8b;
+    --accent2: #ff8a00;
+    --shadow: 0 6px 20px rgba(255, 79, 139, .10);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, "Apple SD Gothic Neo", "Pretendard", "Noto Sans KR", "Malgun Gothic", sans-serif;
+    background: linear-gradient(160deg, var(--bg1) 0%, var(--bg2) 100%) fixed;
+    color: var(--text);
+    min-height: 100vh;
+    line-height: 1.5;
+  }
+  .wrap { max-width: 720px; margin: 0 auto; padding: 48px 20px 80px; }
+  header { text-align: center; margin-bottom: 32px; }
+  header .tag { color: var(--accent); font-weight: 800; letter-spacing: .15em; font-size: 12px; }
+  header h1 { font-size: clamp(26px, 6vw, 38px); margin: 8px 0 10px; letter-spacing: -.02em; }
+  header p { color: var(--muted); font-size: 15px; }
+
+  form {
+    display: flex; gap: 10px; background: var(--card);
+    border: 1px solid var(--line); border-radius: 16px; padding: 12px;
+    box-shadow: var(--shadow);
+  }
+  input[type=date] {
+    flex: 1; min-width: 0; background: #fff8fa; color: var(--text);
+    border: 1px solid var(--line); border-radius: 10px; padding: 12px 14px;
+    font-size: 16px; font-family: inherit;
+  }
+  button {
+    background: var(--accent); color: #fff; border: 0; border-radius: 10px;
+    padding: 12px 22px; font-size: 16px; font-weight: 700; cursor: pointer; font-family: inherit;
+  }
+  button:hover { filter: brightness(1.05); }
+  button:disabled { opacity: .5; cursor: wait; }
+  button.ghost { background: #fff; color: var(--accent); border: 1.5px solid var(--accent); }
+
+  #status { text-align: center; color: var(--muted); margin: 28px 0; min-height: 24px; }
+  #status.error { color: #e5484d; }
+
+  section { margin-top: 28px; }
+  h2 { font-size: 13px; color: var(--muted); letter-spacing: .06em; font-weight: 700; margin-bottom: 12px; }
+
+  .hero {
+    background: linear-gradient(135deg, #ff5f95 0%, #ff9a5a 100%);
+    color: #fff; border-radius: 20px; padding: 28px 24px;
+    box-shadow: 0 10px 28px rgba(255, 95, 149, .30);
+  }
+  .hero .rank { font-size: 72px; font-weight: 900; line-height: 1; }
+  .hero .song { font-size: clamp(22px, 5vw, 30px); font-weight: 800; margin-top: 10px; letter-spacing: -.01em; }
+  .hero .artist { font-size: 17px; opacity: .95; margin-top: 2px; }
+  .hero .meta { margin-top: 14px; font-size: 13px; opacity: .9; }
+  .hero a, .item a {
+    display: inline-block; margin-top: 12px; font-size: 13px; font-weight: 700;
+    color: inherit; text-decoration: none; border: 1px solid currentColor;
+    border-radius: 999px; padding: 4px 12px;
+  }
+
+  .item {
+    display: flex; gap: 16px; align-items: center;
+    background: var(--card); border: 1px solid var(--line);
+    border-radius: 14px; padding: 16px 18px; margin-top: 10px; box-shadow: var(--shadow);
+  }
+  .item .rank { font-size: 28px; font-weight: 800; width: 36px; text-align: center; color: var(--accent2); }
+  .item .info { flex: 1; min-width: 0; }
+  .item .song { font-weight: 700; font-size: 17px; }
+  .item .artist { color: var(--muted); font-size: 14px; }
+  .item .meta { color: var(--muted); font-size: 12px; margin-top: 4px; }
+  .item a { margin-top: 0; color: var(--accent); white-space: nowrap; }
+
+  .gen { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+  .gen .box {
+    background: var(--card); border: 1px solid var(--line); border-radius: 14px;
+    padding: 16px 12px; text-align: center; box-shadow: var(--shadow);
+  }
+  .gen .label { color: var(--muted); font-size: 13px; }
+  .gen .year { font-size: 24px; font-weight: 800; margin: 4px 0 2px; }
+  .gen .age { font-size: 13px; color: var(--accent2); font-weight: 700; }
+  .note { color: var(--muted); font-size: 12px; margin-top: 10px; }
+
+  .share { text-align: center; }
+  .share img {
+    width: 100%; max-width: 360px; border-radius: 16px; border: 1px solid var(--line);
+    box-shadow: 0 10px 28px rgba(0, 0, 0, .10); margin-bottom: 16px;
+  }
+  .share .btns { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+  .hidden { display: none; }
+  @media (max-width: 520px) {
+    .gen { grid-template-columns: 1fr; }
+    .item { gap: 12px; padding: 14px; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="tag">BILLBOARD HOT 100</div>
+    <h1>🎵 내가 태어난 주의 빌보드 TOP 5</h1>
+    <p>생일을 넣으면 그 주의 1위~5위와, 그 해의 학번 세대를 알려드려요.</p>
+  </header>
+
+  <form id="form">
+    <input type="date" id="birth" min="1958-08-04" required>
+    <button type="submit" id="btn">조회</button>
+  </form>
+
+  <div id="status"></div>
+
+  <div id="result" class="hidden">
+    <section>
+      <h2 id="chartTitle"></h2>
+      <div id="hero"></div>
+      <div id="list"></div>
+    </section>
+
+    <section>
+      <h2 id="genTitle"></h2>
+      <div class="gen" id="gen"></div>
+      <p class="note">※ 한국 학제 기준(3월 입학, 빠른 생일 제외)이며, 나이는 오늘 날짜 기준 만 나이입니다. 생일 전/후에 따라 만 나이는 1살 차이가 날 수 있어요.</p>
+    </section>
+
+    <section class="share">
+      <h2>공유용 이미지</h2>
+      <img id="preview" alt="공유용 이미지 미리보기">
+      <div class="btns">
+        <button type="button" id="saveBtn">📥 이미지로 저장</button>
+        <button type="button" id="shareBtn" class="ghost">📤 공유하기</button>
+      </div>
+    </section>
+  </div>
+</div>
+
+<script>
+const BASE = "https://raw.githubusercontent.com/mhollingshead/billboard-hot-100/main";
+const FONT = '"Apple SD Gothic Neo", "Pretendard", "Noto Sans KR", "Malgun Gothic", sans-serif';
+const $ = (id) => document.getElementById(id);
+let validDates = null;
+let current = null;      // { chart, birth, cohorts }
+let imageBlob = null;
+
+const today = new Date();
+const todayStr = today.getFullYear() + "-" + String(today.getMonth() + 1).padStart(2, "0") + "-" + String(today.getDate()).padStart(2, "0");
+$("birth").max = todayStr;
+
+async function getJSON(url) {
+  const res = await fetch(url);
+  if (!res.ok) throw new Error("HTTP " + res.status);
+  return res.json();
+}
+
+async function loadChart(birth) {
+  if (!validDates) validDates = (await getJSON(BASE + "/valid_dates.json")).slice().sort();
+  const target = validDates.find((d) => d >= birth);
+  if (target) {
+    const diff = (new Date(target) - new Date(birth)) / 86400000;
+    if (diff <= 7) return getJSON(BASE + "/date/" + target + ".json");
+  }
+  const recent = await getJSON(BASE + "/recent.json");
+  if (birth <= recent.date) return recent;
+  throw new Error("차트 데이터가 아직 없는 날짜예요.");
+}
+
+function el(tag, cls, text) {
+  const e = document.createElement(tag);
+  if (cls) e.className = cls;
+  if (text != null) e.textContent = text;
+  return e;
+}
+
+function ytLink(s) {
+  const a = el("a", null, "▶ 듣기");
+  a.href = "https://www.youtube.com/results?search_query=" + encodeURIComponent(s.song + " " + s.artist);
+  a.target = "_blank";
+  a.rel = "noopener";
+  return a;
+}
+
+function metaText(s) {
+  const last = s.last_week ? "지난주 " + s.last_week + "위" : "신곡 진입";
+  return last + " · 최고 " + s.peak_position + "위 · " + s.weeks_on_chart + "주째 차트인";
+}
+
+function getCohorts(birth) {
+  const year = Number(birth.slice(0, 4));
+  const nowYear = today.getFullYear();
+  return [
+    { label: "고등학교 1학년", born: year - 16 },
+    { label: "대학교 입학 (신입생)", born: year - 19 },
+    { label: "대학교 4학년", born: year - 22 },
+  ].map((c) => ({ ...c, ageHigh: nowYear - c.born, ageLow: nowYear - c.born - 1 }));
+}
+
+function render(chart, birth) {
+  const top5 = chart.data.slice(0, 5);
+  $("chartTitle").textContent = chart.date + " 차트 · 빌보드 HOT 100 TOP 5";
+
+  const hero = $("hero"); hero.innerHTML = "";
+  const list = $("list"); list.innerHTML = "";
+
+  top5.forEach((s, i) => {
+    if (i === 0) {
+      const box = el("div", "hero");
+      box.append(el("div", "rank", "1"), el("div", "song", s.song), el("div", "artist", s.artist), el("div", "meta", metaText(s)), ytLink(s));
+      hero.append(box);
+    } else {
+      const item = el("div", "item");
+      const info = el("div", "info");
+      info.append(el("div", "song", s.song), el("div", "artist", s.artist), el("div", "meta", metaText(s)));
+      item.append(el("div", "rank", String(s.this_week)), info, ytLink(s));
+      list.append(item);
+    }
+  });
+
+  const year = birth.slice(0, 4);
+  const cohorts = getCohorts(birth);
+  $("genTitle").textContent = year + "년, 그해의 학번 세대";
+  const gen = $("gen"); gen.innerHTML = "";
+  cohorts.forEach((c) => {
+    const box = el("div", "box");
+    box.append(
+      el("div", "label", c.label),
+      el("div", "year", c.born + "년생"),
+      el("div", "age", "지금 만 " + c.ageLow + "~" + c.ageHigh + "세")
+    );
+    gen.append(box);
+  });
+
+  current = { chart, birth, cohorts };
+  $("result").classList.remove("hidden");
+  buildImage();
+}
+
+/* ---------- 공유용 이미지 (Canvas로 직접 그림) ---------- */
+
+function roundRect(ctx, x, y, w, h, r) {
+  ctx.beginPath();
+  ctx.moveTo(x + r, y);
+  ctx.arcTo(x + w, y, x + w, y + h, r);
+  ctx.arcTo(x + w, y + h, x, y + h, r);
+  ctx.arcTo(x, y + h, x, y, r);
+  ctx.arcTo(x, y, x + w, y, r);
+  ctx.closePath();
+}
+
+function fit(ctx, text, maxW) {
+  if (ctx.measureText(text).width <= maxW) return text;
+  let t = text;
+  while (t.length && ctx.measureText(t + "…").width > maxW) t = t.slice(0, -1);
+  return t + "…";
+}
+
+function wrap(ctx, text, maxW, maxLines) {
+  const words = text.split(" ");
+  let lines = [], cur = "";
+  words.forEach((w) => {
+    const test = cur ? cur + " " + w : w;
+    if (ctx.measureText(test).width <= maxW) cur = test;
+    else { if (cur) lines.push(cur); cur = w; }
+  });
+  if (cur) lines.push(cur);
+  if (lines.length > maxLines) {
+    lines = lines.slice(0, maxLines);
+    lines[maxLines - 1] = lines[maxLines - 1] + "…";
+  }
+  return lines.map((l) => fit(ctx, l, maxW));
+}
+
+function formatKoreanDate(s) {
+  const [y, m, d] = s.split("-").map(Number);
+  return y + "년 " + m + "월 " + d + "일";
+}
+
+function buildImage() {
+  const { chart, birth, cohorts } = current;
+  const top5 = chart.data.slice(0, 5);
+  const W = 1080, H = 1500;
+  const canvas = document.createElement("canvas");
+  canvas.width = W; canvas.height = H;
+  const ctx = canvas.getContext("2d");
+  ctx.textBaseline = "alphabetic";
+
+  // 배경
+  const bg = ctx.createLinearGradient(0, 0, W, H);
+  bg.addColorStop(0, "#fff1f5");
+  bg.addColorStop(1, "#fff6e5");
+  ctx.fillStyle = bg;
+  ctx.fillRect(0, 0, W, H);
+
+  // 헤더
+  ctx.textAlign = "center";
+  ctx.fillStyle = "#ff4f8b";
+  ctx.font = "800 26px " + FONT;
+  ctx.fillText("B I L L B O A R D   H O T   1 0 0", W / 2, 95);
+  ctx.fillStyle = "#2a2236";
+  ctx.font = "800 58px " + FONT;
+  ctx.fillText("내가 태어난 주의 TOP 5", W / 2, 165);
+  ctx.fillStyle = "#7b7390";
+  ctx.font = "500 28px " + FONT;
+  ctx.fillText(formatKoreanDate(birth) + " 생  ·  " + chart.date + " 차트", W / 2, 215);
+
+  // 1위 카드
+  ctx.save();
+  ctx.shadowColor = "rgba(255,95,149,0.35)";
+  ctx.shadowBlur = 30; ctx.shadowOffsetY = 10;
+  const hg = ctx.createLinearGradient(60, 255, 1020, 555);
+  hg.addColorStop(0, "#ff5f95");
+  hg.addColorStop(1, "#ff9a5a");
+  ctx.fillStyle = hg;
+  roundRect(ctx, 60, 255, 960, 300, 40);
+  ctx.fill();
+  ctx.restore();
+
+  const s1 = top5[0];
+  ctx.textAlign = "left";
+  ctx.fillStyle = "#fff";
+  ctx.font = "900 130px " + FONT;
+  ctx.fillText("1", 105, 440);
+  ctx.font = "800 48px " + FONT;
+  const songLines = wrap(ctx, s1.song, 730, 2);
+  let y = 345;
+  songLines.forEach((l) => { ctx.fillText(l, 245, y); y += 56; });
+  ctx.font = "500 32px " + FONT;
+  ctx.fillText(fit(ctx, s1.artist, 730), 245, y + 4);
+  ctx.globalAlpha = 0.9;
+  ctx.font = "500 24px " + FONT;
+  ctx.fillText(fit(ctx, metaText(s1), 730), 245, y + 48);
+  ctx.globalAlpha = 1;
+
+  // 2~5위
+  top5.slice(1).forEach((s, i) => {
+    const ry = 590 + i * 146;
+    ctx.save();
+    ctx.shadowColor = "rgba(255,79,139,0.12)";
+    ctx.shadowBlur = 18; ctx.shadowOffsetY = 6;
+    ctx.fillStyle = "#fff";
+    roundRect(ctx, 60, ry, 960, 130, 28);
+    ctx.fill();
+    ctx.restore();
+
+    ctx.textAlign = "center";
+    ctx.fillStyle = "#ff8a00";
+    ctx.font = "900 56px " + FONT;
+    ctx.fillText(String(s.this_week), 130, ry + 82);
+
+    ctx.textAlign = "left";
+    ctx.fillStyle = "#2a2236";
+    ctx.font = "800 36px " + FONT;
+    ctx.fillText(fit(ctx, s.song, 790), 210, ry + 56);
+    ctx.fillStyle = "#7b7390";
+    ctx.font = "500 28px " + FONT;
+    ctx.fillText(fit(ctx, s.artist, 790), 210, ry + 98);
+  });
+
+  // 세대
+  ctx.textAlign = "left";
+  ctx.fillStyle = "#7b7390";
+  ctx.font = "700 28px " + FONT;
+  ctx.fillText(birth.slice(0, 4) + "년, 그해의 학번 세대", 70, 1218);
+
+  const bw = (960 - 40) / 3;
+  cohorts.forEach((c, i) => {
+    const bx = 60 + i * (bw + 20), by = 1245;
+    ctx.save();
+    ctx.shadowColor = "rgba(255,79,139,0.12)";
+    ctx.shadowBlur = 18; ctx.shadowOffsetY = 6;
+    ctx.fillStyle = "#fff";
+    roundRect(ctx, bx, by, bw, 180, 28);
+    ctx.fill();
+    ctx.restore();
+
+    ctx.textAlign = "center";
+    ctx.fillStyle = "#7b7390";
+    ctx.font = "500 24px " + FONT;
+    ctx.fillText(fit(ctx, c.label, bw - 30), bx + bw / 2, by + 48);
+    ctx.fillStyle = "#2a2236";
+    ctx.font = "800 46px " + FONT;
+    ctx.fillText(c.born + "년생", bx + bw / 2, by + 108);
+    ctx.fillStyle = "#ff8a00";
+    ctx.font = "700 24px " + FONT;
+    ctx.fillText("지금 만 " + c.ageLow + "~" + c.ageHigh + "세", bx + bw / 2, by + 150);
+  });
+
+  // 푸터
+  ctx.textAlign = "center";
+  ctx.fillStyle = "#b0a8c0";
+  ctx.font = "500 22px " + FONT;
+  ctx.fillText("Data: Billboard Hot 100 · mhollingshead/billboard-hot-100", W / 2, 1472);
+
+  canvas.toBlob((blob) => {
+    imageBlob = blob;
+    const img = $("preview");
+    if (img.dataset.url) URL.revokeObjectURL(img.dataset.url);
+    const url = URL.createObjectURL(blob);
+    img.dataset.url = url;
+    img.src = url;
+  }, "image/png");
+}
+
+function fileName() {
+  return "billboard-" + current.birth + ".png";
+}
+
+$("saveBtn").addEventListener("click", () => {
+  if (!imageBlob) return;
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(imageBlob);
+  a.download = fileName();
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  setTimeout(() => URL.revokeObjectURL(a.href), 1000);
+});
+
+$("shareBtn").addEventListener("click", async () => {
+  if (!imageBlob) return;
+  const file = new File([imageBlob], fileName(), { type: "image/png" });
+  if (navigator.canShare && navigator.canShare({ files: [file] })) {
+    try {
+      await navigator.share({ files: [file], title: "내가 태어난 주의 빌보드 TOP 5" });
+    } catch (e) { /* 사용자가 취소 */ }
+  } else {
+    $("saveBtn").click();
+    alert("이 브라우저는 바로 공유를 지원하지 않아 이미지를 저장했어요.");
+  }
+});
+
+$("form").addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const birth = $("birth").value;
+  if (!birth) return;
+  const status = $("status");
+  status.className = "";
+  status.textContent = "차트를 불러오는 중…";
+  $("btn").disabled = true;
+  $("result").classList.add("hidden");
+
+  try {
+    if (birth < "1958-08-04") throw new Error("빌보드 HOT 100은 1958년 8월 4일부터 시작했어요.");
+    const chart = await loadChart(birth);
+    status.textContent = "";
+    render(chart, birth);
+  } catch (err) {
+    status.className = "error";
+    status.textContent = "불러오지 못했어요: " + err.message;
+  } finally {
+    $("btn").disabled = false;
+  }
+});
+</script>
+</body>
+</html>
